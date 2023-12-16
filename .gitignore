@@ -1,0 +1,7 @@
+# secret keys
+.rot-keys
+
+# direnv
+.direnv
+.envrc
+.envrc.private
