@@ -5,3 +5,7 @@
 .direnv
 .envrc
 .envrc.private
+
+# terraform
+.terragrunt-cache
+.terraform.lock.hcl
