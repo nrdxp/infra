@@ -13,7 +13,7 @@ let organist = inputs.organist in
       |> std.record.from_array,
     packages.terragrunt = organist.import_nix "self#terragrunt",
     hooks.secrets = m%"
-    if gpg --card-status &>/dev/null; then
+    if gpg --card-status &>/dev/null && [[ -v KEYS_PATH ]]; then
       if ! diff -q <(gopass cat "$KEYS_PATH") .rot-keys; then
         if [[ -r .rot-keys ]]; then
           >&2 echo "Syncing rot keys"
@@ -23,6 +23,11 @@ let organist = inputs.organist in
           gopass fscopy "$KEYS_PATH" .rot-keys
         fi
       fi
+    fi
+    if [[ -v GPG_KEY_PATH && -v GIT_CRYPT_PATH ]] && ! [[ -r "$GPG_KEY_PATH" ]]; then
+      >&2 echo "Setting up git-crypt key"
+      mkdir -p "$CRYPT_DIR"
+      cp "$GIT_CRYPT_PATH" "$GPG_KEY_PATH"
     fi
   "%,
   }

@@ -27,7 +27,7 @@
             '';
           in pkgs.writeShellScriptBin "terragrunt" ''
             export terragrunt="${pkgs.terragrunt}/bin/terragrunt"
-            if gpg --card-status &>/dev/null; then
+            if gpg --card-status &>/dev/null && [[ -v PASS_PATH ]]; then
               gopass cat "$PASS_PATH" | rot run "${inner}" "$@"
             else
               "$terragrunt" "$@"

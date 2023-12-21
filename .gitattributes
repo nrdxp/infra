@@ -1,1 +1,2 @@
 rot.jsonnet filter=git-crypt diff=git-crypt
+.envrc.private filter=git-crypt diff=git-crypt

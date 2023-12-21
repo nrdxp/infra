@@ -1,10 +1,10 @@
 # secret keys
 .rot-keys
+.git-crypt
 
 # direnv
 .direnv
 .envrc
-.envrc.private
 
 # terraform
 .terragrunt-cache
