@@ -7,6 +7,7 @@ remote_state {
   config = {
     skip_credentials_validation = true
     skip_metadata_api_check     = true
+    disable_bucket_update       = true
 
     bucket = "nrd-tf"
 
