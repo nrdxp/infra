@@ -9,7 +9,7 @@ let organist = inputs.organist in
     packages =
       std.array.map
         (fun pkg => { field = pkg, value = organist.import_nix "nixpkgs#%{pkg}" })
-        ["opentofu", "rot", "gopass"]
+        ["opentofu", "rot", "gopass", "git-crypt"]
       |> std.record.from_array,
     packages.terragrunt = organist.import_nix "self#terragrunt",
     hooks.secrets = m%"
