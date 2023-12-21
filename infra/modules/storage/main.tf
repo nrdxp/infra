@@ -1,4 +1,4 @@
-provider "digitalocean" { }
+provider "digitalocean" {}
 
 resource "digitalocean_spaces_bucket" "cache" {
   name = "${var.bucket}.${data.cloudflare_zone.zone.name}"

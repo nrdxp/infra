@@ -9,8 +9,9 @@ let organist = inputs.organist in
     packages =
       std.array.map
         (fun pkg => { field = pkg, value = organist.import_nix "nixpkgs#%{pkg}" })
-        ["terragrunt", "opentofu", "rot", "gopass"]
+        ["opentofu", "rot", "gopass"]
       |> std.record.from_array,
+    packages.terragrunt = organist.import_nix "self#terragrunt",
     hooks.secrets = m%"
     if gpg --card-status &>/dev/null; then
       if ! diff -q <(gopass cat "$KEYS_PATH") .rot-keys; then
@@ -21,11 +22,6 @@ let organist = inputs.organist in
           >&2 echo "Setting up rot keys"
           gopass fscopy "$KEYS_PATH" .rot-keys
         fi
-      fi
-      if gopass ls "$PASS_PATH" &>/dev/null; then
-        set -a
-        . <(gopass cat "$PASS_PATH" | rot run printenv | grep -E "$(rot show-config | rot jq -r '.values | keys[]' | head -c -1 | tr '\n' '|')")
-        set +a
       fi
     fi
   "%,
