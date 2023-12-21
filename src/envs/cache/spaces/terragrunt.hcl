@@ -8,7 +8,7 @@ include "root" {
 
 terraform {
   # See: https://github.com/gruntwork-io/terragrunt/issues/1675
-  source = "${get_repo_root()}/infra/modules/storage//."
+  source = "${get_repo_root()}/src/modules/storage//."
 }
 
 inputs = {
