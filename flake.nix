@@ -19,16 +19,10 @@
         inherit (nixpkgs.legacyPackages) pkgs;
       in {
         packages = {
-          terragrunt = let
-            inner = pkgs.writeShellScript "inner" ''
-              export SPACES_ACCESS_KEY_ID="$AWS_ACCESS_KEY_ID"
-              export SPACES_SECRET_ACCESS_KEY="$AWS_SECRET_ACCESS_KEY"
-              "$terragrunt" "$@"
-            '';
-          in pkgs.writeShellScriptBin "terragrunt" ''
-            export terragrunt="${pkgs.terragrunt}/bin/terragrunt"
+          terragrunt = pkgs.writeShellScriptBin "terragrunt" ''
+            terragrunt="${pkgs.terragrunt}/bin/terragrunt"
             if gpg --card-status &>/dev/null && [[ -v PASS_PATH ]]; then
-              gopass cat "$PASS_PATH" | rot run "${inner}" "$@"
+              gopass cat "$PASS_PATH" | rot run "$terragrunt" "$@"
             else
               "$terragrunt" "$@"
             fi
