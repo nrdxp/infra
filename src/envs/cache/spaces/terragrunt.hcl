@@ -15,7 +15,7 @@ inputs = {
   bucket     = "cache"
   region     = "sfo3"
   policy     = "${get_terragrunt_dir()}/policy.json"
-  zone       = "nrd.sh"
+  zones      = ["nrd.sh", "divnix.com"]
   access_id  = local.id
   secret_key = local.key
 }

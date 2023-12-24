@@ -17,8 +17,8 @@ remote_state {
 
     endpoint = local.endpoint
 
-    key            = "${split("envs/", path_relative_to_include())[1]}/terraform.tfstate"
-    region         = "us-east-1"
-    encrypt        = true
+    key     = "${split("envs/", path_relative_to_include())[1]}/terraform.tfstate"
+    region  = "us-east-1"
+    encrypt = true
   }
 }
