@@ -30,6 +30,19 @@ resource "digitalocean_spaces_bucket_policy" "cache" {
   })
 }
 
+resource "digitalocean_spaces_bucket_object" "index" {
+  for_each     = toset(var.zones)
+  region       = digitalocean_spaces_bucket.cache[each.key].region
+  bucket       = digitalocean_spaces_bucket.cache[each.key].name
+  key          = "nix-cache-info"
+  content      = <<-EOT
+                   StoreDir: /nix/store
+                   WantMassQuery: 1
+                   Priority: ${index(var.zones, each.key) * 10 + 50}
+                 EOT
+  content_type = "text/plain"
+}
+
 provider "cloudflare" {}
 
 data "cloudflare_ip_ranges" "ips" {}
